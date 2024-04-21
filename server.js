@@ -13,6 +13,10 @@ const io = require('socket.io')(serverWithSocket, {
   cors: true
 });
 
+app.get('/', (req, res) => {
+  console.log("running")
+  res.send("runnning")
+})
 
 io.on("connection", (socket) => {
   console.log("connected socket id " + socket.id)
