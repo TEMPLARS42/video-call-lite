@@ -1,22 +1,25 @@
-const https = require('https')
-const express = require('express');
-const app = express();
-const socketio = require('socket.io');
-app.use(express.static(__dirname))
+const app = require("express")();
+const server = require("http").createServer(app);
+const cors = require("cors");
 
-const serverWithSocket = app.listen(5000, () => {
-  console.log(`server listens at ${5000}`);
-
+const io = require("socket.io")(server, {
+	cors: {
+		origin: "*",
+		methods: [ "GET", "POST" ]
+	}
 });
 
-const io = require('socket.io')(serverWithSocket, {
-  cors: true
-});
+app.use(cors());
+
+const PORT = process.env.PORT || 5000;
+
+server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
 app.get('/', (req, res) => {
-  console.log("running")
+  console.log("running main server")
   res.send("runnning")
 })
+
 
 io.on("connection", (socket) => {
   console.log("connected socket id " + socket.id)
