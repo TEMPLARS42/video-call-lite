@@ -49,7 +49,7 @@ io.on('connection', socket => {
     if (room) {
       room = room.filter(id => id !== socket.id);
       users[roomID] = room;
-      socket.emit("remove user", socket.id);
+      socket.broadcast.emit("remove user", socket.id);
     }
   });
 
